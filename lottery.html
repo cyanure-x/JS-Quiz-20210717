@@ -76,28 +76,55 @@
     對獎時，搭配先前做的「五倍樂透⾃動選號機」產⽣的號碼進⾏比對。
   -->
 
-  <script type="text/javascript">
+<script type="text/javascript">
+    let lottery = [];
     let i;
+
+    while(lottery.length<6){
+      let n = Math.floor(Math.random()*49)+1;
+      if(!lottery.includes(n)){
+        lottery.push(n);
+      }
+    };
+
+    console.log('lottery: ', lottery);
 
     // 產生 49 顆按鈕
     for (i = 1; i < 50; i++) {
       $('.lottery-nums').append('<div>' + i + '</div>');
+      $('.lottery-nums div').css('cursor','pointer');
     }
 
     // 1. 為數字按鈕加入事件
-    $('.lottery-nums div').on('click', function () {
-
+    $('.lottery-nums div').on('click', function (e) {
+      console.log('click!');
+      $(e.target).toggleClass('highlight');
+      let select = e.target;
+      console.log(select);
+      //想把選取的數字回傳成陣列 (然後可以用陣列長度作為兌獎時，確認是否有6個號碼的方式)，還是有其他思考方向??
+      // let select = [];
+      // let select_arr = select.map(function(n){
+      //   return n*1;
+      // })
     });
 
     // 重設按鈕
     $('.reset').on('click', function () {
-
+      lottery.length = 0;
+      $('.lottery-result > span').text(' ');
     });
 
 
     // 兌獎按鈕
     $('.btn-lottery').on('click', function () {
-
+      //不曉得為何按重設後，再次按兌獎就沒作用了
+      //下面陣列是要用"user選取"的號碼陣列，但不曉得這個怎回傳成陣列
+      if (select.length < 6 || select.length > 6){
+        alert('plz select 6 numbers');
+      }else{
+        //幫開獎號碼加上顏色??
+        $('.lottery-result > span').text(lottery);
+      };
     });
 
   </script>
